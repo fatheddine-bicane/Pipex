@@ -1,23 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.h                                            :+:      :+:    :+:   */
+/*   ft_lstdelone_bonus.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fbicane <fatheddine04@gmail.com>           +#+  +:+       +#+        */
+/*   By: fbicane <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/28 15:27:08 by fbicane           #+#    #+#             */
-/*   Updated: 2025/01/29 18:11:07 by fbicane          ###   ########.fr       */
+/*   Created: 2024/11/12 16:51:23 by fbicane           #+#    #+#             */
+/*   Updated: 2025/01/29 15:31:13 by fbicane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPEX_H
-# define PIPEX_H
+#include "../my_library.h"
 
-# include "./my_library/my_library.h"
-# include <stdio.h>
-# include <unistd.h>
-# include <sys/wait.h>
-# include <fcntl.h>
-# include <stdlib.h>
-
-#endif
+void	ft_lstdelone(t_list *lst, void (*del)(void *))
+{
+	if (!lst || !del)
+		return ;
+	(*del)(lst->content);
+	free(lst);
+}

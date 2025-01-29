@@ -1,23 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.h                                            :+:      :+:    :+:   */
+/*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fbicane <fatheddine04@gmail.com>           +#+  +:+       +#+        */
+/*   By: fbicane <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/28 15:27:08 by fbicane           #+#    #+#             */
-/*   Updated: 2025/01/29 18:11:07 by fbicane          ###   ########.fr       */
+/*   Created: 2024/10/23 09:29:11 by fbicane           #+#    #+#             */
+/*   Updated: 2025/01/29 15:35:41 by fbicane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPEX_H
-# define PIPEX_H
+#include "../my_library.h"
 
-# include "./my_library/my_library.h"
-# include <stdio.h>
-# include <unistd.h>
-# include <sys/wait.h>
-# include <fcntl.h>
-# include <stdlib.h>
+char	*ft_strrchr(const char *str, int ch)
+{
+	int	i;
 
-#endif
+	i = ft_strlen(str);
+	while (i >= 0)
+	{
+		if (str[i] == (char)ch)
+			return ((char *)&str[i]);
+		i--;
+	}
+	return (0);
+}

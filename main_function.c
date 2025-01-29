@@ -6,13 +6,13 @@
 /*   By: fbicane <fatheddine04@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 15:27:26 by fbicane           #+#    #+#             */
-/*   Updated: 2025/01/28 15:27:29 by fbicane          ###   ########.fr       */
+/*   Updated: 2025/01/29 18:45:41 by fbicane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-int	main(int argc, char *argv[])
+int	main(int argc, char *argv[], char **envp)
 {
 	int	pid;
 	int	fds[2];
@@ -20,6 +20,7 @@ int	main(int argc, char *argv[])
 	int	ouf;
 	char str[100];
 	char str2[100];
+	char **str3;
 
 	pipe(fds);
 	pid = fork();
@@ -31,6 +32,8 @@ int	main(int argc, char *argv[])
 		dup2(fds[1], 1);
 		close(inf);
 		close(fds[1]);
+		//str = findpath(argv[2], envp);
+		/*execve(str3[0], str3, envp);*/
 		read(0, str, 40);
 		write(1, &str, 40);
 		exit(1);
@@ -54,4 +57,5 @@ int	main(int argc, char *argv[])
 	else
 		waitpid(pid, NULL, 0);
 	printf("copying is done");
+	
 }

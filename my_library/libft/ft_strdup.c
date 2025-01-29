@@ -1,23 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.h                                            :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fbicane <fatheddine04@gmail.com>           +#+  +:+       +#+        */
+/*   By: fbicane <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/28 15:27:08 by fbicane           #+#    #+#             */
-/*   Updated: 2025/01/29 18:11:07 by fbicane          ###   ########.fr       */
+/*   Created: 2024/10/25 21:29:11 by fbicane           #+#    #+#             */
+/*   Updated: 2025/01/29 15:34:16 by fbicane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPEX_H
-# define PIPEX_H
+#include "../my_library.h"
 
-# include "./my_library/my_library.h"
-# include <stdio.h>
-# include <unistd.h>
-# include <sys/wait.h>
-# include <fcntl.h>
-# include <stdlib.h>
+char	*ft_strdup(const char *s1)
+{
+	char	*s1_dup;
 
-#endif
+	s1_dup = (char *)malloc((ft_strlen(s1) + 1));
+	if (!s1_dup)
+		return (0);
+	ft_strlcpy(s1_dup, s1, (ft_strlen(s1) + 1));
+	return (s1_dup);
+}
