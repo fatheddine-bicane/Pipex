@@ -12,7 +12,7 @@
 
 #include "pipex.h"
 
-char	*ft_concat_path(char *arr2, char *command)
+static char	*ft_concat_path(char *arr2, char *command)
 {
 	int	i;
 	int	j;

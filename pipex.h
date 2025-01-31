@@ -20,4 +20,6 @@
 # include <fcntl.h>
 # include <stdlib.h>
 
+char	**find_path(char *argv, char **envp);
+
 #endif
