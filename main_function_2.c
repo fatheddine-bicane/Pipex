@@ -55,9 +55,11 @@ int	main(int argc, char **argv, char **envp)
 			//waitpid(pid); => or wait (cuz u will have one child at the time)
 	//change the input the inpute to the pipe dup2(fd[0], 0)
 	ouf = open(argv[3], O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	read(fds[0], buff, 8);
 	buff = get_next_line(fds[0], '\n');
-	write(ouf, &buff, 8);
+	dup2(ouf, 1);
+	close(ouf);
+	printf("%s", buff);
+	/*write(ouf, &buff, 8);*/
 	/*dup2(fds[1], 1);*/
 	/*close(fds[1]);*/
 	/*dup2(ouf, 1);*/
