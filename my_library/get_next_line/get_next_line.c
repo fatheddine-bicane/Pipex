@@ -12,14 +12,14 @@
 
 #include "../my_library.h"
 
-static char	*get_the_reminder(char *container)
+static char	*get_the_reminder(char *container, char to_find)
 {
 	char	*new_container;
 	char	*temp_container;
 
 	if (!container)
 		return (NULL);
-	temp_container = ft_strchr(container, '\n');
+	temp_container = ft_strchr(container, to_find);
 	if (!temp_container)
 		return (free(container), NULL);
 	new_container = ft_strdup(temp_container + 1);
@@ -27,7 +27,7 @@ static char	*get_the_reminder(char *container)
 	return (new_container);
 }
 
-static char	*get_the_newline(char *container)
+static char	*get_the_newline(char *container, char to_find)
 {
 	size_t	i;
 	char	*new_line;
@@ -35,9 +35,9 @@ static char	*get_the_newline(char *container)
 	if (!container)
 		return (NULL);
 	i = 0;
-	while (container[i] && container[i] != '\n')
+	while (container[i] && container[i] != to_find)
 		i++;
-	if (container[i] == '\n')
+	if (container[i] == to_find)
 		i++;
 	new_line = malloc((i + 1) * sizeof(char));
 	if (!new_line)
@@ -47,7 +47,7 @@ static char	*get_the_newline(char *container)
 	return (new_line);
 }
 
-static char	*read_from_fd(int fd, char *container)
+static char	*read_from_fd(int fd, char *container, char to_find)
 {
 	ssize_t	bytes_read;
 	char	*buffer;
@@ -63,7 +63,7 @@ static char	*read_from_fd(int fd, char *container)
 			return (free (buffer), free (container), NULL);
 		buffer[bytes_read] = '\0';
 		container = ft_strjoin(container, buffer);
-		if (ft_strchr(buffer, '\n'))
+		if (ft_strchr(buffer, to_find))
 			break ;
 	}
 	free(buffer);
@@ -72,7 +72,7 @@ static char	*read_from_fd(int fd, char *container)
 	return (container);
 }
 
-char	*get_next_line(int fd)
+char	*get_next_line(int fd, char to_find)
 {
 	static char	*container;
 	char		*line;
@@ -84,13 +84,13 @@ char	*get_next_line(int fd)
 		container = malloc(1 * sizeof (char));
 		if (!container)
 			return (NULL);
-		*container = 0;
+		*container = '\0';
 	}
-	if (!ft_strchr(container, '\n'))
-		container = read_from_fd(fd, container);
+	if (!ft_strchr(container, to_find))
+		container = read_from_fd(fd, container, to_find);
 	if (!container)
 		return (free (container), NULL);
-	line = get_the_newline(container);
-	container = get_the_reminder(container);
+	line = get_the_newline(container, to_find);
+	container = get_the_reminder(container, to_find);
 	return (line);
 }

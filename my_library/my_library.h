@@ -30,7 +30,7 @@
 #  define FD 1024
 # endif
 
-char	*get_next_line(int fd);
+char	*get_next_line(int fd, char to_find);
 /*----------------------------------*/
 
 //ft_printf
