@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_function_2.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fbicane <fatheddine04@gmail.com>           +#+  +:+       +#+        */
+/*   By: fbicane <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 19:38:51 by fbicane           #+#    #+#             */
-/*   Updated: 2025/01/29 20:02:21 by fbicane          ###   ########.fr       */
+/*   Updated: 2025/02/06 15:43:48 by fbicane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	main(int argc, char **argv, char **envp)
 {
 	int		inf;
 	int		ouf;
-	char	*buff;
+	/*char	*buff;*/
 	int		i;
 	char	**path;
 
@@ -61,8 +61,8 @@ int	main(int argc, char **argv, char **envp)
 		//else
 			//waitpid(pid); => or wait (cuz u will have one child at the time)
 	//change the input the inpute to the pipe dup2(fd[0], 0)
-	ouf = open(argv[3], O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	dup2(STDOUT_FILENO, ouf);
+	ouf = open(argv[argc - 1], O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	dup2(ouf, STDOUT_FILENO);
 	path = find_path(argv[i], envp);
 	execve(path[0], path, envp);
 	/*buff = get_next_line(fds[0], '\n');*/

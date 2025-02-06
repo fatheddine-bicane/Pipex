@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "../my_library.h"
 
 int	ft_nb_count(long nb)
 {
