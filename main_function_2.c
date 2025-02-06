@@ -12,39 +12,46 @@
 
 #include "pipex.h"
 
-
-void	ft_pipex(char *argv, char **envp, int *fds)
+void	ft_pipex(char *argv, char **envp)
 {
 	int		pid;
 	char	**path;
+	int		fds[2];
 
 	pipe(fds);
 	pid = fork();
 	if (!pid)
 	{
-		dup2(fds[1], 1);
-		close(fds[1]);
+		dup2(fds[1], STDOUT_FILENO);
+		close(fds[0]);
 		path = find_path(argv, envp);
 		/*printf("%s", path[0]);*/
 		execve(path[0], path, envp);
 	}
 	else
+	{
 		wait(NULL);
+		dup2(fds[0], STDIN_FILENO);
+		close(fds[1]);
+	}
 }
 
 int	main(int argc, char **argv, char **envp)
 {
 	int		inf;
 	int		ouf;
-	int		fds[2];
 	char	*buff;
+	int		i;
+	char	**path;
 
 	//changing the inpute from 0 to infile;
 	inf = open(argv[1], O_RDONLY);
-	dup2(inf, 0);
+	dup2(inf, STDIN_FILENO);
 	close(inf);
 	//call a function (pipex)
-	ft_pipex(argv[2], envp, fds);//here i have to give the commanf for examle (argv[2])
+	i = 1;
+	while (++i < argc - 2)
+		ft_pipex(argv[i], envp);//here i have to give the commanf for examle (argv[2])
 	//pipex()
 	//pipex will create a pipe first;
 		//fork()
@@ -55,10 +62,13 @@ int	main(int argc, char **argv, char **envp)
 			//waitpid(pid); => or wait (cuz u will have one child at the time)
 	//change the input the inpute to the pipe dup2(fd[0], 0)
 	ouf = open(argv[3], O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	buff = get_next_line(fds[0], '\n');
-	dup2(ouf, 1);
-	close(ouf);
-	printf("%s", buff);
+	dup2(STDOUT_FILENO, ouf);
+	path = find_path(argv[i], envp);
+	execve(path[0], path, envp);
+	/*buff = get_next_line(fds[0], '\n');*/
+	/*dup2(ouf, 1);*/
+	/*close(ouf);*/
+	/*printf("%s", buff);*/
 	/*write(ouf, &buff, 8);*/
 	/*dup2(fds[1], 1);*/
 	/*close(fds[1]);*/
