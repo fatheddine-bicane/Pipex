@@ -44,7 +44,6 @@ char	**find_path(char *argv, char **envp)
 	str = arr[0];
 	while(envp[i] && ft_strncmp(envp[i], "PATH=", 5))
 		i++;
-	//envp[i]
 	arr2 = ft_split(envp[i] + 5, ':');
 	i = 0;
 	while (arr2[i])
