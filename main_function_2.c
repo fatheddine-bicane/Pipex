@@ -12,11 +12,24 @@
 
 #include "pipex.h"
 
+void	ft_pipex_utils(int *fds, char *argv, char **envp)
+{
+	char	**path;
+
+	close((fds[0]));
+	if (dup2((fds[1]), STDOUT_FILENO) == -1)
+		exit(1);
+	close((fds[1]));
+	path = find_path(argv, envp);
+	execve(path[0], path, envp);
+	exit(1);
+}
+
 void	ft_pipex(char *argv, char **envp)
 {
 	int		pid;
-	char	**path;
 	int		fds[2];
+	/*char	**path;*/
 
 	if (pipe(fds) == -1)
 		exit(1);
@@ -25,13 +38,14 @@ void	ft_pipex(char *argv, char **envp)
 		exit(1);
 	if (!pid)
 	{
-		close (fds[0]);
-		if (dup2(fds[1], STDOUT_FILENO) == -1)
-			exit(1);
-		close(fds[1]);
-		path = find_path(argv, envp);
-		execve(path[0], path, envp);
-		exit(1);
+		ft_pipex_utils(fds, argv, envp);
+		/*close (fds[0]);*/
+		/*if (dup2(fds[1], STDOUT_FILENO) == -1)*/
+		/*	exit(1);*/
+		/*close(fds[1]);*/
+		/*path = find_path(argv, envp);*/
+		/*execve(path[0], path, envp);*/
+		/*exit(1);*/
 	}
 	else
 	{
@@ -43,6 +57,16 @@ void	ft_pipex(char *argv, char **envp)
 	}
 }
 
+void	ft_open(char *infile, int *inf)
+{
+	(*inf) = open(infile, O_RDONLY);
+	if ((*inf) == -1)
+		exit(1);
+	if (dup2((*inf), STDIN_FILENO) == -1)
+		exit(1);
+	close((*inf));
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	int		inf;
@@ -52,12 +76,7 @@ int	main(int argc, char **argv, char **envp)
 
 	if (!(argc == 5))
 		exit(1);
-	inf = open(argv[1], O_RDONLY);
-	if (inf == -1)
-		exit (1);
-	if (dup2(inf, STDIN_FILENO) == -1)
-		exit (1);
-	close(inf);
+	ft_open(argv[1], &inf);
 	i = 1;
 	while (++i < argc - 2)
 		ft_pipex(argv[i], envp);
