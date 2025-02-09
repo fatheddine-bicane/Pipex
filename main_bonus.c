@@ -6,7 +6,7 @@
 /*   By: fbicane <fbicane@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 20:49:19 by fbicane           #+#    #+#             */
-/*   Updated: 2025/02/07 21:30:14 by fbicane          ###   ########.fr       */
+/*   Updated: 2025/02/09 21:56:45 by fbicane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,25 @@
 
 int	main(int argc, char **argv, char **envp)
 {
-	char	*line;
-	int		file;
+	int		inf;
+		int		ouf;
+		int		i;
+		char	**path;
 
-	line = "x";
-	file = open("file", O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	dup2(file, 1);
-	while (!ft_strnstr(line, argv[1], ft_strlen(line)))
-	{
-		line = get_next_line(0, '\n');
-		printf("%s", line);
-	}
-	exit(1);
-	printf("%s", line);
-	//what is in the top i can read toa file from stdin
-	
+		if (argc < 5)
+				ft_trow_error(1, NULL);
+		ft_open(argv[1], &inf);
+		i = 1;
+		while (++i < argc - 2)
+				ft_pipex(argv[i], envp);
+		ouf = open(argv[argc - 1], O_WRONLY | O_CREAT | O_TRUNC, 0644);
+		if (ouf == -1)
+				ft_trow_error(5, NULL);
+		if (dup2(ouf, STDOUT_FILENO) == -1)
+				ft_trow_error(5, NULL);
+		close (ouf);
+		path = find_path(argv[i], envp);
+		if (!path)
+				ft_trow_error(2, argv[i]);
+		execve(path[0], path, envp);
 }

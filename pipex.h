@@ -22,5 +22,8 @@
 
 char	**find_path(char *argv, char **envp);
 void	ft_trow_error(int error, char *argv);
+void	ft_pipex_utils(int *fds, char *argv, char **envp);
+void	ft_pipex(char *argv, char **envp);
+void	ft_open(char *infile, int *inf);
 
 #endif

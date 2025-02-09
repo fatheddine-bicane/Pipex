@@ -18,7 +18,7 @@ void	ft_pipex_utils(int *fds, char *argv, char **envp)
 
 	close((fds[0]));
 	if (dup2((fds[1]), STDOUT_FILENO) == -1)
-		exit(1);
+		ft_trow_error(5, NULL);
 	close((fds[1]));
 	path = find_path(argv, envp);
 	if (!path)
@@ -33,10 +33,10 @@ void	ft_pipex(char *argv, char **envp)
 	int		fds[2];
 
 	if (pipe(fds) == -1)
-		exit(1);
+		ft_trow_error(5, NULL);
 	pid = fork();
 	if (pid == -1)
-		exit(1);
+		ft_trow_error(5, NULL);
 	if (!pid)
 		ft_pipex_utils(fds, argv, envp);
 	else
@@ -44,7 +44,7 @@ void	ft_pipex(char *argv, char **envp)
 		close (fds[1]);
 		wait(NULL);
 		if (dup2(fds[0], STDIN_FILENO) == -1)
-			exit(1);
+			ft_trow_error(5, NULL);
 		close(fds[0]);
 	}
 }
@@ -55,7 +55,7 @@ void	ft_open(char *infile, int *inf)
 	if ((*inf) == -1)
 		ft_trow_error(4, infile);
 	if (dup2((*inf), STDIN_FILENO) == -1)
-		exit(1);
+		ft_trow_error(5, NULL);
 	close((*inf));
 }
 
@@ -74,9 +74,9 @@ int	main(int argc, char **argv, char **envp)
 		ft_pipex(argv[i], envp);
 	ouf = open(argv[argc - 1], O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (ouf == -1)
-		exit (1);
+		ft_trow_error(5, NULL);
 	if (dup2(ouf, STDOUT_FILENO) == -1)
-		exit (1);
+		ft_trow_error(5, NULL);
 	close (ouf);
 	path = find_path(argv[i], envp);
 	if (!path)
