@@ -13,7 +13,7 @@ PERROR_DIR = my_library/perror
 LIB_DIRS = $(LIBFT_DIR) $(PRINTF_DIR) $(GNL_DIR) $(PERROR_DIR)
 
 # Source files
-SRCS = pipex.c find_path.c main_function_2.c
+SRCS = pipex.c find_path.c main_function_2.c error_handling.c
 OBJS = $(SRCS:.c=.o)
 
 # Library source files (using wildcard to get all .c files in each directory)

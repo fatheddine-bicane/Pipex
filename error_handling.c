@@ -12,8 +12,27 @@
 
 #include "pipex.h"
 
-void	ft_trow_error(int error)
+void	ft_trow_error(int error, char *argv)
 {
 	if (error == 1)
-		//write to stderr smthing
+		ft_perror("khassk akhouya 5 dyal arguments\n");
+	else if (error == 2)
+	{
+		ft_perror("La akhouya had l command =>");
+		ft_perror(argv);
+		ft_perror(" ma kaynach\n");
+	}
+	else if (error == 3)
+	{
+		ft_perror("ma 3dkch lh9 truni had l3iba =>");
+		ft_perror(argv);
+		ft_perror(" a khouya\n");
+	}
+	else if (error == 4)
+	{
+		ft_perror("khouya achno had l3iba =>");
+		ft_perror(argv);
+		ft_perror(" ??\n");
+	}
+	exit(1);
 }

@@ -21,5 +21,6 @@
 # include <stdlib.h>
 
 char	**find_path(char *argv, char **envp);
+void	ft_trow_error(int error, char *argv);
 
 #endif

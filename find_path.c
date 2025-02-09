@@ -25,7 +25,7 @@ static char	*ft_concat_path(char *arr2, char *command)
 		return (NULL);
 	i = 0;
 	j = 0;
-	while(arr2[i])
+	while (arr2[i])
 		str[j++] = arr2[i++];
 	str[j++] = '/';
 	i = 0;
@@ -47,44 +47,31 @@ static void	free_arr(char **arr)
 	free(arr);
 }
 
-char	**find_path(char *argv, char **envp)
+char	**ft_path_finder(char **arr, char **envp)
 {
-	char	*str;
-	char	*path;
-	char	**arr;
 	char	**arr2;
 	int		i;
 
-	if (!argv || !envp)
-		return (NULL);
-	arr = ft_split(argv, 32);
-	if (!arr)
-		return(NULL);
-	str = arr[0];
-	if (!str)
-	{
-		free_arr(arr);
-		return (NULL);
-	}
 	i = 0;
-	while(envp[i] && ft_strncmp(envp[i], "PATH=", 5))
+	while (envp[i] && ft_strncmp(envp[i], "PATH=", 5))
 		i++;
 	arr2 = ft_split(envp[i] + 5, ':');
-	if (!arr)
-	{
-		free_arr(arr);
-		return (NULL);
-	}
+	if (!arr2)
+		return (free_arr(arr), NULL);
+	return (arr2);
+}
+
+char	**ft_command_finder(char **arr2, char *str, char **arr)
+{
+	char	*path;
+	int		i;
+
 	i = 0;
 	while (arr2[i])
 	{
 		path = ft_concat_path(arr2[i], str);
 		if (!path)
-		{
-			free_arr(arr);
-			free_arr(arr2);
-			return (NULL);
-		}
+			return (free_arr(arr), free_arr(arr2), NULL);
 		if (!access(path, F_OK | X_OK))
 		{
 			free(arr[0]);
@@ -95,7 +82,25 @@ char	**find_path(char *argv, char **envp)
 		free(path);
 		i++;
 	}
-	free_arr(arr);
-	free_arr(arr2);
-	return (NULL);
+	return (free_arr(arr), free_arr(arr2), NULL);
+}
+
+char	**find_path(char *argv, char **envp)
+{
+	char	*str;
+	char	**arr;
+	char	**arr2;
+
+	if (!argv || !envp)
+		return (NULL);
+	arr = ft_split(argv, 32);
+	if (!arr)
+		return (NULL);
+	str = arr[0];
+	if (!str)
+		return (free_arr(arr), NULL);
+	arr2 = ft_path_finder(arr, envp);
+	if (!arr2)
+		return (free_arr(arr), NULL);
+	return (ft_command_finder(arr2, str, arr));
 }

@@ -21,6 +21,8 @@ void	ft_pipex_utils(int *fds, char *argv, char **envp)
 		exit(1);
 	close((fds[1]));
 	path = find_path(argv, envp);
+	if (!path)
+		ft_trow_error(2, argv);
 	execve(path[0], path, envp);
 	exit(1);
 }
@@ -29,7 +31,6 @@ void	ft_pipex(char *argv, char **envp)
 {
 	int		pid;
 	int		fds[2];
-	/*char	**path;*/
 
 	if (pipe(fds) == -1)
 		exit(1);
@@ -37,16 +38,7 @@ void	ft_pipex(char *argv, char **envp)
 	if (pid == -1)
 		exit(1);
 	if (!pid)
-	{
 		ft_pipex_utils(fds, argv, envp);
-		/*close (fds[0]);*/
-		/*if (dup2(fds[1], STDOUT_FILENO) == -1)*/
-		/*	exit(1);*/
-		/*close(fds[1]);*/
-		/*path = find_path(argv, envp);*/
-		/*execve(path[0], path, envp);*/
-		/*exit(1);*/
-	}
 	else
 	{
 		close (fds[1]);
@@ -61,7 +53,7 @@ void	ft_open(char *infile, int *inf)
 {
 	(*inf) = open(infile, O_RDONLY);
 	if ((*inf) == -1)
-		exit(1);
+		ft_trow_error(4, infile);
 	if (dup2((*inf), STDIN_FILENO) == -1)
 		exit(1);
 	close((*inf));
@@ -75,7 +67,7 @@ int	main(int argc, char **argv, char **envp)
 	char	**path;
 
 	if (!(argc == 5))
-		exit(1);
+		ft_trow_error(1, NULL);
 	ft_open(argv[1], &inf);
 	i = 1;
 	while (++i < argc - 2)
@@ -88,9 +80,6 @@ int	main(int argc, char **argv, char **envp)
 	close (ouf);
 	path = find_path(argv[i], envp);
 	if (!path)
-	{
-		ft_perror("la akhouya hadchi ma khdamch");
-		return (0);
-	}
+		ft_trow_error(2, argv[i]);
 	execve(path[0], path, envp);
 }
