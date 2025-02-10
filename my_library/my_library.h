@@ -6,7 +6,7 @@
 /*   By: fbicane <fatheddine04@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 15:12:10 by fbicane           #+#    #+#             */
-/*   Updated: 2025/01/29 15:52:52 by fbicane          ###   ########.fr       */
+/*   Updated: 2025/02/10 13:43:08 by fbicane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@
 #  define FD 1024
 # endif
 
-char	*get_next_line(int fd, char to_find);
+char	*get_next_line(int fd);
 /*----------------------------------*/
 
 //ft_printf

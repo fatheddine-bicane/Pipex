@@ -12,74 +12,24 @@
 
 #include "pipex.h"
 
-void	ft_pipex_utils(int *fds, char *argv, char **envp)
-{
-	char	**path;
-
-	close((fds[0]));
-	if (dup2((fds[1]), STDOUT_FILENO) == -1)
-		ft_trow_error(5, NULL);
-	close((fds[1]));
-	path = find_path(argv, envp);
-	if (!path)
-		ft_trow_error(2, argv);
-	execve(path[0], path, envp);
-	exit(1);
-}
-
-void	ft_pipex(char *argv, char **envp)
-{
-	int		pid;
-	int		fds[2];
-
-	if (pipe(fds) == -1)
-		ft_trow_error(5, NULL);
-	pid = fork();
-	if (pid == -1)
-		ft_trow_error(5, NULL);
-	if (!pid)
-		ft_pipex_utils(fds, argv, envp);
-	else
-	{
-		close (fds[1]);
-		wait(NULL);
-		if (dup2(fds[0], STDIN_FILENO) == -1)
-			ft_trow_error(5, NULL);
-		close(fds[0]);
-	}
-}
-
-void	ft_open(char *infile, int *inf)
-{
-	(*inf) = open(infile, O_RDONLY);
-	if ((*inf) == -1)
-		ft_trow_error(4, infile);
-	if (dup2((*inf), STDIN_FILENO) == -1)
-		ft_trow_error(5, NULL);
-	close((*inf));
-}
-
 int	main(int argc, char **argv, char **envp)
 {
 	int		inf;
 	int		ouf;
-	int		i;
 	char	**path;
 
 	if (!(argc == 5))
 		ft_trow_error(1, NULL);
 	ft_open(argv[1], &inf);
-	i = 1;
-	while (++i < argc - 2)
-		ft_pipex(argv[i], envp);
+	ft_pipex(argv[2], envp);
 	ouf = open(argv[argc - 1], O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (ouf == -1)
 		ft_trow_error(5, NULL);
 	if (dup2(ouf, STDOUT_FILENO) == -1)
 		ft_trow_error(5, NULL);
 	close (ouf);
-	path = find_path(argv[i], envp);
+	path = find_path(argv[3], envp);
 	if (!path)
-		ft_trow_error(2, argv[i]);
+		ft_trow_error(2, argv[3]);
 	execve(path[0], path, envp);
 }

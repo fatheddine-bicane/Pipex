@@ -1,59 +1,95 @@
-# Compiler and flags
-CC	= cc
-CFLAGS = -Wall -Wextra -Werror -g
-
-# Project name
+CC = cc
+FLAGS = -Wall -Wextra -Werror -g
 NAME = pipex
+BNAME = pipex_bonus
 
-# Directories
-LIBFT_DIR = my_library/libft
-PRINTF_DIR = my_library/ft_printf
-GNL_DIR = my_library/get_next_line
-PERROR_DIR = my_library/perror
-LIB_DIRS = $(LIBFT_DIR) $(PRINTF_DIR) $(GNL_DIR) $(PERROR_DIR)
+# Colors
+GREEN = \033[0;32m
+BLUE = \033[0;34m
+PURPLE = \033[0;35m
+YELLOW = \033[0;33m
+CYAN = \033[0;36m
+RED = \033[0;31m
+RESET = \033[0m
 
-# Source files
-SRCS = pipex.c find_path.c main_function_2.c error_handling.c pipex.c
-OBJS = $(SRCS:.c=.o)
+SRCS =	./my_library/libft/ft_atoi.c ./my_library/libft/ft_bzero.c ./my_library/libft/ft_calloc.c ./my_library/libft/ft_isalnum.c ./my_library/libft/ft_isalpha.c ./my_library/libft/ft_isascii.c ./my_library/libft/ft_isdigit.c ./my_library/libft/ft_isprint.c ./my_library/libft/ft_itoa.c ./my_library/libft/ft_lstadd_back_bonus.c ./my_library/libft/ft_lstadd_front_bonus.c ./my_library/libft/ft_lstclear_bonus.c ./my_library/libft/ft_lstdelone_bonus.c ./my_library/libft/ft_lstiter_bonus.c ./my_library/libft/ft_lstlast_bonus.c ./my_library/libft/ft_lstmap_bonus.c ./my_library/libft/ft_lstnew_bonus.c ./my_library/libft/ft_lstsize_bonus.c ./my_library/libft/ft_memchr.c ./my_library/libft/ft_memcmp.c ./my_library/libft/ft_memcpy.c ./my_library/libft/ft_memmove.c ./my_library/libft/ft_memset.c ./my_library/libft/ft_putchar_fd.c ./my_library/libft/ft_putendl_fd.c ./my_library/libft/ft_putnbr_fd.c ./my_library/libft/ft_putstr_fd.c ./my_library/libft/ft_split.c ./my_library/libft/ft_strchr.c ./my_library/libft/ft_strdup.c ./my_library/libft/ft_striteri.c ./my_library/libft/ft_strjoin.c ./my_library/libft/ft_strlcat.c ./my_library/libft/ft_strlcpy.c ./my_library/libft/ft_strlen.c ./my_library/libft/ft_strmapi.c ./my_library/libft/ft_strncmp.c ./my_library/libft/ft_strnstr.c ./my_library/libft/ft_strrchr.c ./my_library/libft/ft_strtrim.c ./my_library/libft/ft_substr.c ./my_library/libft/ft_tolower.c ./my_library/libft/ft_toupper.c ./my_library/ft_printf/ft_nb_count.c ./my_library/ft_printf/ft_printf.c ./my_library/ft_printf/ft_putadrr.c ./my_library/ft_printf/ft_putchar.c ./my_library/ft_printf/ft_puthexa.c ./my_library/ft_printf/ft_putnbr.c ./my_library/ft_printf/ft_putstr.c ./my_library/ft_printf/ft_putunint.c ./my_library/get_next_line/get_next_line.c ./my_library/perror/ft_perror.c error_handling.c find_path.c main.c pipex.c
 
-# Library source files (using wildcard to get all .c files in each directory)
-LIBFT_SRCS = $(wildcard $(LIBFT_DIR)/*.c)
-PRINTF_SRCS = $(wildcard $(PRINTF_DIR)/*.c)
-GNL_SRCS = $(wildcard $(GNL_DIR)/*.c)
-PERROR_SRCS = $(wildcard $(PERROR_DIR)/*.c)
+BONUS =	./my_library/libft/ft_atoi.c ./my_library/libft/ft_bzero.c ./my_library/libft/ft_calloc.c ./my_library/libft/ft_isalnum.c ./my_library/libft/ft_isalpha.c ./my_library/libft/ft_isascii.c ./my_library/libft/ft_isdigit.c ./my_library/libft/ft_isprint.c ./my_library/libft/ft_itoa.c ./my_library/libft/ft_lstadd_back_bonus.c ./my_library/libft/ft_lstadd_front_bonus.c ./my_library/libft/ft_lstclear_bonus.c ./my_library/libft/ft_lstdelone_bonus.c ./my_library/libft/ft_lstiter_bonus.c ./my_library/libft/ft_lstlast_bonus.c ./my_library/libft/ft_lstmap_bonus.c ./my_library/libft/ft_lstnew_bonus.c ./my_library/libft/ft_lstsize_bonus.c ./my_library/libft/ft_memchr.c ./my_library/libft/ft_memcmp.c ./my_library/libft/ft_memcpy.c ./my_library/libft/ft_memmove.c ./my_library/libft/ft_memset.c ./my_library/libft/ft_putchar_fd.c ./my_library/libft/ft_putendl_fd.c ./my_library/libft/ft_putnbr_fd.c ./my_library/libft/ft_putstr_fd.c ./my_library/libft/ft_split.c ./my_library/libft/ft_strchr.c ./my_library/libft/ft_strdup.c ./my_library/libft/ft_striteri.c ./my_library/libft/ft_strjoin.c ./my_library/libft/ft_strlcat.c ./my_library/libft/ft_strlcpy.c ./my_library/libft/ft_strlen.c ./my_library/libft/ft_strmapi.c ./my_library/libft/ft_strncmp.c ./my_library/libft/ft_strnstr.c ./my_library/libft/ft_strrchr.c ./my_library/libft/ft_strtrim.c ./my_library/libft/ft_substr.c ./my_library/libft/ft_tolower.c ./my_library/libft/ft_toupper.c ./my_library/ft_printf/ft_nb_count.c ./my_library/ft_printf/ft_printf.c ./my_library/ft_printf/ft_putadrr.c ./my_library/ft_printf/ft_putchar.c ./my_library/ft_printf/ft_puthexa.c ./my_library/ft_printf/ft_putnbr.c ./my_library/ft_printf/ft_putstr.c ./my_library/ft_printf/ft_putunint.c ./my_library/get_next_line/get_next_line.c ./my_library/perror/ft_perror.c error_handling.c find_path.c main_bonus.c pipex.c
 
-# Library objects
-LIBFT_OBJS = $(LIBFT_SRCS:.c=.o)
-PRINTF_OBJS = $(PRINTF_SRCS:.c=.o)
-GNL_OBJS = $(GNL_SRCS:.c=.o)
-PERROR_OBJS = $(PERROR_SRCS:.c=.o)
-LIB_OBJS = $(LIBFT_OBJS) $(PRINTF_OBJS) $(GNL_OBJS) $(PERROR_OBJS)
+OFILES = $(SRCS:.c=.o)
+BOFILES = $(BONUS:.c=.o)
 
-# Include paths
-INCLUDES = -I. -I$(LIBFT_DIR) -I$(PRINTF_DIR) -I$(GNL_DIR) -I$(PERROR_DIR) -Imy_library
-
-# Main target
 all: $(NAME)
 
-# Linking
-$(NAME): $(OBJS) $(LIB_OBJS)
-	$(CC) $(CFLAGS) $(OBJS) $(LIB_OBJS) -o $(NAME)
-
-# Pattern rule for object files
 %.o: %.c
-	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+	@$(CC) $(FLAGS) -c $< -o $@
 
-# Clean objects
+$(NAME): $(OFILES)
+	@$(CC) $(FLAGS) $(OFILES) -o $(NAME)
+	@echo "$(BLUE)Compiling Pipex program$(RESET)"
+	@echo "$(BLUE)➜ libft$(RESET)\c"
+	@sleep 0.3; echo "$(BLUE).$(RESET)\c"; sleep 0.3; echo "$(BLUE).$(RESET)\c"; sleep 0.3; echo "$(BLUE).$(RESET)\c"
+	@sleep 0.3; echo "$(BLUE)✓$(RESET)"
+	@echo "$(BLUE)➜ ft_printf$(RESET)\c"
+	@sleep 0.3; echo "$(BLUE).$(RESET)\c"; sleep 0.3; echo "$(BLUE).$(RESET)\c"; sleep 0.3; echo "$(BLUE).$(RESET)\c"
+	@sleep 0.3; echo "$(BLUE)✓$(RESET)"
+	@echo "$(BLUE)➜ ft_perror$(RESET)\c"
+	@sleep 0.3; echo "$(BLUE).$(RESET)\c"; sleep 0.3; echo "$(BLUE).$(RESET)\c"; sleep 0.3; echo "$(BLUE).$(RESET)\c"
+	@sleep 0.3; echo "$(BLUE)✓$(RESET)"
+	@echo "$(BLUE)➜ get_next_line$(RESET)\c"
+	@sleep 0.3; echo "$(BLUE).$(RESET)\c"; sleep 0.3; echo "$(BLUE).$(RESET)\c"; sleep 0.3; echo "$(BLUE).$(RESET)\c"
+	@sleep 0.3; echo "$(BLUE)✓$(RESET)"
+	@echo "$(BLUE)➜ main and other utility files$(RESET)\c"
+	@sleep 0.3; echo "$(BLUE).$(RESET)\c"; sleep 0.3; echo "$(BLUE).$(RESET)\c"; sleep 0.3; echo "$(BLUE).$(RESET)\c"
+	@sleep 0.3; echo "$(BLUE)✓$(RESET)"
+	@echo "$(BLUE)➜ creating pipex program$(RESET)\c"
+	@sleep 0.3; echo "$(BLUE).$(RESET)\c"; sleep 0.3; echo "$(BLUE).$(RESET)\c"; sleep 0.3; echo "$(BLUE).$(RESET)\c"
+	@sleep 0.3; echo "$(BLUE)✓$(RESET)"
+	@$(CC) $(FLAGS) $(OFILES) -o $(NAME)
+	@echo "$(GREEN)pipex compiled successfully!$(RESET)"
+	@sleep 0.3; echo "$(PURPLE)Created by: fatheddine-bicane$(RESET)"
+
+
+bonus: $(BNAME)
+
+$(BNAME): $(BOFILES)
+	@echo "$(BLUE)Compiling Pipex bonus program$(RESET)"
+	@echo "$(BLUE)➜ libft$(RESET)\c"
+	@sleep 0.3; echo "$(BLUE).$(RESET)\c"; sleep 0.3; echo "$(BLUE).$(RESET)\c"; sleep 0.3; echo "$(BLUE).$(RESET)\c"
+	@sleep 0.3; echo "$(BLUE)✓$(RESET)"
+	@echo "$(BLUE)➜ ft_printf$(RESET)\c"
+	@sleep 0.3; echo "$(BLUE).$(RESET)\c"; sleep 0.3; echo "$(BLUE).$(RESET)\c"; sleep 0.3; echo "$(BLUE).$(RESET)\c"
+	@sleep 0.3; echo "$(BLUE)✓$(RESET)"
+	@echo "$(BLUE)➜ ft_perror$(RESET)\c"
+	@sleep 0.3; echo "$(BLUE).$(RESET)\c"; sleep 0.3; echo "$(BLUE).$(RESET)\c"; sleep 0.3; echo "$(BLUE).$(RESET)\c"
+	@sleep 0.3; echo "$(BLUE)✓$(RESET)"
+	@echo "$(BLUE)➜ get_next_line$(RESET)\c"
+	@sleep 0.3; echo "$(BLUE).$(RESET)\c"; sleep 0.3; echo "$(BLUE).$(RESET)\c"; sleep 0.3; echo "$(BLUE).$(RESET)\c"
+	@sleep 0.3; echo "$(BLUE)✓$(RESET)"
+	@echo "$(BLUE)➜ main bonus and other utility bonus files$(RESET)\c"
+	@sleep 0.3; echo "$(BLUE).$(RESET)\c"; sleep 0.3; echo "$(BLUE).$(RESET)\c"; sleep 0.3; echo "$(BLUE).$(RESET)\c"
+	@sleep 0.3; echo "$(BLUE)✓$(RESET)"
+	@echo "$(BLUE)➜ creating pipex bonus program$(RESET)\c"
+	@sleep 0.3; echo "$(BLUE).$(RESET)\c"; sleep 0.3; echo "$(BLUE).$(RESET)\c"; sleep 0.3; echo "$(BLUE).$(RESET)\c"
+	@sleep 0.3; echo "$(BLUE)✓$(RESET)"
+	@$(CC) $(FLAGS) $(BOFILES) -o $(BNAME)
+	@echo "$(GREEN)pipex bonus compiled successfully!$(RESET)"
+	@sleep 0.3; echo "$(PURPLE)Created by: fatheddine-bicane$(RESET)"
+
 clean:
-	rm -f $(OBJS)
-	rm -f $(LIB_OBJS)
+	@rm -f $(OFILES) $(BOFILES)
+	@echo "$(YELLOW)Cleaning object files$(RESET)\c"
+	@sleep 0.3; echo "$(YELLOW).$(RESET)\c"; sleep 0.3; echo "$(YELLOW).$(RESET)\c"; sleep 0.3; echo "$(YELLOW).$(RESET)\c"
+	@sleep 0.3; echo "$(YELLOW)✓$(RESET)"
 
-# Clean objects and executable
 fclean: clean
-	rm -f $(NAME)
+	@rm -f $(NAME) $(BNAME)
+	@echo "$(YELLOW)Cleaning executables$(RESET)\c"
+	@sleep 0.3; echo "$(YELLOW).$(RESET)\c"; sleep 0.3; echo "$(YELLOW).$(RESET)\c"; sleep 0.3; echo "$(YELLOW).$(RESET)\c"
+	@sleep 0.3; echo "$(YELLOW)✓$(RESET)"
 
-# Rebuild
 re: fclean all
 
-# Phony targets
-.PHONY: all clean fclean re
+re_bonus : fclean bonus
+
+.PHONY: all bonus clean fclean re
