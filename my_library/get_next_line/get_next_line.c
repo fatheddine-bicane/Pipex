@@ -6,7 +6,7 @@
 /*   By: fbicane <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/28 15:26:17 by fbicane           #+#    #+#             */
-/*   Updated: 2024/12/12 14:27:43 by fbicane          ###   ########.fr       */
+/*   Updated: 2025/02/10 20:55:05 by fbicane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static char	*get_the_newline(char *container)
 	return (new_line);
 }
 
-static char	*read_from_fd(int fd, char *container)
+static char	*read_from_fd(int fd, char *container, char *tmp)
 {
 	ssize_t	bytes_read;
 	char	*buffer;
@@ -60,9 +60,13 @@ static char	*read_from_fd(int fd, char *container)
 	{
 		bytes_read = read(fd, buffer, BUFFER_SIZE);
 		if (bytes_read == -1)
-			return (free (buffer), free (container), NULL);
+			return (free(buffer), free(container), NULL);
 		buffer[bytes_read] = '\0';
-		container = ft_strjoin(container, buffer);
+		tmp = ft_strjoin(container, buffer);
+		free(container);
+		if (!tmp)
+			return (free(buffer), NULL);
+		container = tmp;
 		if (ft_strchr(buffer, '\n'))
 			break ;
 	}
@@ -76,6 +80,7 @@ char	*get_next_line(int fd)
 {
 	static char	*container;
 	char		*line;
+	char		*tmp;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (free (container), NULL);
@@ -86,8 +91,9 @@ char	*get_next_line(int fd)
 			return (NULL);
 		*container = 0;
 	}
+	tmp = NULL;
 	if (!ft_strchr(container, '\n'))
-		container = read_from_fd(fd, container);
+		container = read_from_fd(fd, container, tmp);
 	if (!container)
 		return (free (container), NULL);
 	line = get_the_newline(container);

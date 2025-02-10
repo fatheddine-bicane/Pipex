@@ -6,7 +6,7 @@
 /*   By: fbicane <fbicane@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 20:49:19 by fbicane           #+#    #+#             */
-/*   Updated: 2025/02/10 11:22:18 by fbicane          ###   ########.fr       */
+/*   Updated: 2025/02/10 21:31:17 by fbicane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ int	main(int argc, char **argv, char **envp)
 
 	if (argc < 5)
 		ft_trow_error(6, NULL);
+	if (!(ft_strncmp(argv[1], here_doc, ft_strlen(argv[1]))))
+		//the function that will do here_doc
 	ft_open(argv[1], &inf);
 	i = 1;
 	while (++i < argc - 2)

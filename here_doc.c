@@ -6,7 +6,7 @@
 /*   By: fbicane <fbicane@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 13:03:29 by fbicane           #+#    #+#             */
-/*   Updated: 2025/02/10 14:22:09 by fbicane          ###   ########.fr       */
+/*   Updated: 2025/02/10 21:28:47 by fbicane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	ft_strnstr_custm(const char *haystack, const char *needle, size_t len)
 		j = 0;
 		if (haystack[i + j] == needle[j] && (i + j) < len)
 		{
-			while ((needle[j] != 0 && (i + j) < len)
+		while ((needle[j] != 0 && (i + j) < len)
 				&& (haystack[i + j] == needle[j])
 				&& (haystack[i + j] != 0))
 				j++;
@@ -39,13 +39,26 @@ int	ft_strnstr_custm(const char *haystack, const char *needle, size_t len)
 	return (0);
 }
 
+char	*ft_cpy(char *join, char *limiter)
+{
+	char	*result;
+	int		stop;
+	int		i;
+
+	i = -1;
+	stop = ft_strnstr_custm(join, limiter, ft_strlen(join));
+	result = ft_calloc(stop + 1, sizeof(char));
+	while (++i < stop)
+		result[i] = join[i];
+	free(join);
+	return (result);
+}
 
 char	*ft_here_doc(char *limiter)
 {
 	char	*str;
 	char	*join;
 	char	*join_m;
-	char	*stop;
 	char	*tmp;
 
 	join = ft_strdup("");
@@ -63,22 +76,13 @@ char	*ft_here_doc(char *limiter)
 	join = ft_strjoin(join, str);
 	free(join_m);
 	free(str);
-	stop = ft_strnstr(join, limiter, ft_strlen(join));
-	int	i = ft_strnstr_custm(join, limiter, ft_strlen(join));
-	int	j = 0;
-	tmp = ft_calloc(i + 1, sizeof(char));
-	while (j < i)
-	{
-		tmp[j] = join[j];
-		j++;
-	}
-	/*tmp[j] = '\0';*/
-	free(join);
-	/*join = ft_strdup(tmp);*/
+	tmp = ft_cpy(join, limiter);
 	return (tmp);
 }
 int	main(int argc, char **argv)
 {
+	while (argc)
+		break;
 	char *str = ft_here_doc(argv[1]);
 	printf("%s", str);
 	free(str);
