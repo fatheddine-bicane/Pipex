@@ -38,6 +38,7 @@ void	ft_no_here_doc(int argc, char **argv, char **envp)
 
 void	ft_open_2(int *inf)
 {
+	(*inf) = open("tmp", O_RDONLY);
 	if (dup2((*inf), STDIN_FILENO) == -1)
 		ft_trow_error(5, NULL);
 	close((*inf));
@@ -55,9 +56,8 @@ void	ft_with_here_doc(int argc, char **argv, char **envp)
 	inf = open("tmp", O_RDWR | O_CREAT | O_TRUNC, 0644);
 	ft_putstr_fd(input, inf);
 	free(input);
+	close(inf);
 	ft_open_2(&inf);
-	/*if (dup2(inf, STDIN_FILENO) == -1)*/
-	/*	ft_trow_error(5, NULL);*/
 	close(inf);
 	i = 2;
 	while (++i < argc - 2)
