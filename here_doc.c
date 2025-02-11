@@ -79,11 +79,3 @@ char	*ft_here_doc(char *limiter)
 	tmp = ft_cpy(join, limiter);
 	return (tmp);
 }
-int	main(int argc, char **argv)
-{
-	while (argc)
-		break;
-	char *str = ft_here_doc(argv[1]);
-	printf("%s", str);
-	free(str);
-}

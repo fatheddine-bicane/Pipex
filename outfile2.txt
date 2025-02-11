@@ -1,13 +1,2 @@
-error_handling.c
-find_path.c
-infile.txt
-main_bonus.c
-main.c
-Makefile
-my_library
-outfile2.txt
-outfile.txt
-pipex
-pipex_bonus.h
-pipex.c
-pipex.h
+hello world this is mouad word wordagain
+hello again this the line two of this file

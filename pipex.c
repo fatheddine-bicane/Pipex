@@ -58,3 +58,4 @@ void	ft_open(char *infile, int *inf)
 		ft_trow_error(5, NULL);
 	close((*inf));
 }
+
