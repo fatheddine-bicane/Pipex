@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main_function_2.c                                  :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fbicane <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: fbicane <fbicane@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/29 19:38:51 by fbicane           #+#    #+#             */
-/*   Updated: 2025/02/07 14:24:16 by fbicane          ###   ########.fr       */
+/*   Created: 2025/02/12 20:16:35 by fbicane           #+#    #+#             */
+/*   Updated: 2025/02/12 20:16:37 by fbicane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ int	main(int argc, char **argv, char **envp)
 	int		ouf;
 	char	**path;
 
+	ft_check_envp_path(envp);
 	if (!(argc == 5))
 		ft_trow_error(1, NULL);
 	ft_open(argv[1], &inf);
@@ -28,8 +29,13 @@ int	main(int argc, char **argv, char **envp)
 	if (dup2(ouf, STDOUT_FILENO) == -1)
 		ft_trow_error(5, NULL);
 	close (ouf);
+	if (!argv || !*argv)
+		ft_trow_error_2(9, NULL, argv[3]);
 	path = find_path(argv[3], envp);
 	if (!path)
-		ft_trow_error(2, argv[3]);
+		ft_trow_error_2(7, path, argv[3]);
+	if (!*path)
+		ft_trow_error_2(7, path, argv[3]);
 	execve(path[0], path, envp);
+	ft_free(path);
 }
