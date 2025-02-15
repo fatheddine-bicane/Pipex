@@ -90,20 +90,6 @@ The program handles various error cases including:
 - Fork errors
 - Memory allocation failures
 
-## 📁 Project Structure
-
-```
-pipex/
-├── src/
-│   ├── main.c
-│   ├── pipex.c
-│   ├── utils.c
-│   └── error.c
-├── includes/
-│   └── pipex.h
-└── Makefile
-```
-
 ## ✨ Features
 
 - Multiple command pipeline support
